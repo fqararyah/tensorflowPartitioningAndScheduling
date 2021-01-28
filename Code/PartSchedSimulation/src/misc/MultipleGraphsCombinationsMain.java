@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import Device.Device;
 import Device.DeviceReader;
@@ -29,21 +31,22 @@ public class MultipleGraphsCombinationsMain {
 	public static String[] graphPaths = {
 
 			//in eval: 
-//			"../../Sample_Data/Graph/Evaluation/convolutional_network.csv",
-//			"../../Sample_Data/Graph/Evaluation/recurrent_network.csv",
-//			"../../Sample_Data/Graph/Evaluation/dynamic_rnn.csv", 
+			"C:\\Users\\fareed\\Downloads\\eclipse_projects\\tensorflowPartitioningAndScheduling\\"
+			+ "\\Sample_Data\\Graph\\convolutional_network_graph.csv",
+//			"../../Sample_Data/Graph/recurrent_network.csv",
+//			"../../Sample_Data/Graph/dynamic_rnn_graph.csv", 
 //			"../../Sample_Data/Graph/toyGraph.csv",
 			
-			"../../Sample_Data/Graph/Evaluation/3528n_53253_2017_03_31_15_58_31.csv",
-			"../../Sample_Data/Graph/Evaluation/3793n_6112_2017_03_31_15_58_59.csv",
-			"../../Sample_Data/Graph/Evaluation/3872n_665137_2017_03_31_15_57_47.csv",
-			"../../Sample_Data/Graph/Evaluation/4112n_14174_2017_03_31_15_58_50.csv",
-			"../../Sample_Data/Graph/Evaluation/4122n_150905_2017_03_31_15_58_27.csv",
-			"../../Sample_Data/Graph/Evaluation/4125n_3620_2017_03_31_15_59_08.csv",
-			"../../Sample_Data/Graph/Evaluation/4185n_380243_2017_03_31_15_58_19.csv",
-			"../../Sample_Data/Graph/Evaluation/4193n_1536_2017_03_31_15_59_16.csv",
-			"../../Sample_Data/Graph/Evaluation/4278n_830_2017_03_31_15_59_23.csv",
-			"../../Sample_Data/Graph/Evaluation/4641n_46065_2017_03_31_15_58_36.csv",
+//			"../../Sample_Data/Graph/Evaluation/3528n_53253_2017_03_31_15_58_31.csv",
+//			"../../Sample_Data/Graph/Evaluation/3793n_6112_2017_03_31_15_58_59.csv",
+//			"../../Sample_Data/Graph/Evaluation/3872n_665137_2017_03_31_15_57_47.csv",
+//			"../../Sample_Data/Graph/Evaluation/4112n_14174_2017_03_31_15_58_50.csv",
+//			"../../Sample_Data/Graph/Evaluation/4122n_150905_2017_03_31_15_58_27.csv",
+//			"../../Sample_Data/Graph/Evaluation/4125n_3620_2017_03_31_15_59_08.csv",
+//			"../../Sample_Data/Graph/Evaluation/4185n_380243_2017_03_31_15_58_19.csv",
+//			"../../Sample_Data/Graph/Evaluation/4193n_1536_2017_03_31_15_59_16.csv",
+//			"../../Sample_Data/Graph/Evaluation/4278n_830_2017_03_31_15_59_23.csv",
+//			"../../Sample_Data/Graph/Evaluation/4641n_46065_2017_03_31_15_58_36.csv",
 			
 //			"../../Sample_Data/Graph/toyGraph2.csv",
 			/*
@@ -63,7 +66,8 @@ public class MultipleGraphsCombinationsMain {
 		//"../../Sample_Data/Device/large_devices.csv",
 		//"../../Sample_Data/Device/large_heterogenous_devices.csv"
 			//"../../Sample_Data/Device/2017_02_02_09_46_39.csv"
-			"../../Sample_Data/Device/2017_02_02_14_25_28-100-10-100-100000000-10-60-0.6.csv",
+			"C:\\Users\\fareed\\Downloads\\eclipse_projects\\tensorflowPartitioningAndScheduling\\Sample_Data\\Device\\"
+			+ "2017_02_02_14_25_28-100-10-100-100000000-10-60-0.6.csv",
 //			"../../Sample_Data/Device/toyDevices.csv",
 			//"../../Sample_Data/Device/2017_02_02_09_57_09-10-10-100-100000000-10-60-0.6.csv"
 			//"../../Sample_Data/Device/2017_02_03_11_22_48-50-10-100-100000000-10-60-0.6.csv"
@@ -108,7 +112,7 @@ public class MultipleGraphsCombinationsMain {
 				// z.B Geräteanzahl, compute costs variation zu
 				// commuikationskosten
 				// for(int s = 0; s< 3; s++){
-				boolean successfulRun = repeatExecution(5, graphName, partitioningName, schedulingName, filePath,
+				boolean successfulRun = repeatExecution(1, graphName, partitioningName, schedulingName, filePath,
 						devicePath, true, filePathEvaluationParameter, filePathDeviceEvals);
 
 				if (!successfulRun) {
@@ -199,8 +203,9 @@ public class MultipleGraphsCombinationsMain {
 		double stdSchedulingTime = 0;
 		double stdPartitioningTime  = 0;
 		Evaluation closestEval = null;
-
-		for (Evaluation evaluation : evaluations) {
+		
+		//fareed has commented this code as it is post partitioning and we do not need it
+		/*for (Evaluation evaluation : evaluations) {
 			if (closestEval == null) {
 				closestEval = evaluation;
 			} else {
@@ -241,6 +246,7 @@ public class MultipleGraphsCombinationsMain {
 		//System.out.println("Exece" + stdCommunicationCost);
 
 		System.out.println("\n\n\n");
+		*/
 		return true;
 	}
 
@@ -274,8 +280,20 @@ public class MultipleGraphsCombinationsMain {
 		preprocessor.preprocess(devices);
 
 		partitioningStrategy.partition(graph, devices);
-
-		if (graph.getNodes().size() != 0) {
+		//fareed
+		System.out.println("+++++++++++++++++++++++++");
+		for (Integer device_id: devices.keySet()){
+			Collection<Node> device_nodes = devices.get(device_id).getGraph().getNodes();
+            for(Node node : device_nodes) { 
+            	String node_name = node.getName();
+            	System.out.println(node_name + " " + device_id);
+            }
+		}
+		System.out.println("-------------------------");
+		//end fareed
+		
+		//fareed commenting as the partition is already done and this is all we need!
+		/*if (graph.getNodes().size() != 0) {
 			System.err.println("Not all nodes partitioned, " + partitioningName + ", " + schedulingName
 					+ "\n number of not assigned nodes" + graph.getNodes().size() + " out of " + numberOfNodes);
 			// exit and don't save results
@@ -304,7 +322,7 @@ public class MultipleGraphsCombinationsMain {
 		for (Device device : devices.values()) {
 			System.out.println(device.toString());
 		}
-*/
+
 		if (evaluation.getSchedules() != numberOfNodes) {
 			System.err.println("Send schedules " + evaluation.getSendSchedules() + "," + "receive schedules "
 					+ evaluation.getReceiveSchedules());
@@ -316,7 +334,8 @@ public class MultipleGraphsCombinationsMain {
 		}
 		evaluation.setNumberOfNodes(numberOfNodes);
 		evaluation.setDevices(devices);
-
+*/
+//the end of fareed's comment
 		return evaluation;
 	}
 

@@ -12,6 +12,7 @@ public class Node implements ConstraintInterface{
 	
 	//general properties
 	private int id;
+	private String name;
 	private int outgoingTensorSize;
 	private int numberOfOperations;
 	private HashSet<Node> outgoingNodes = new HashSet<Node>();
@@ -83,15 +84,20 @@ public class Node implements ConstraintInterface{
 	private Node upwardsRankSuccessorNode = null;
 	
 	public Node(CreationNodeEntry entry){
-		setInformation(entry.getId(),entry.getOutgoingTensorSize(),entry.getNumberOfOperations(), entry.getRamUsage(), entry.getConstraint());
+		setInformation(entry.getId(),entry.getOutgoingTensorSize(),entry.getNumberOfOperations(), entry.getRamUsage(), entry.getConstraint(), entry.getName());
 	}
 	
 	protected Node(int id, int outgoingTensorSize, int numberOfOperations, int RamToStore, DeviceConstraint constraint){
-		setInformation(id,outgoingTensorSize,numberOfOperations, RamToStore, constraint);
+		setInformation(id,outgoingTensorSize,numberOfOperations, RamToStore, constraint, "");
 	}
 	
-	public void setInformation(int id, int outgoingTensorSize, int numberOfOperations,  int RamToStore, DeviceConstraint constraint){
+	protected Node(int id, int outgoingTensorSize, int numberOfOperations, int RamToStore, DeviceConstraint constraint, String name){
+		setInformation(id,outgoingTensorSize,numberOfOperations, RamToStore, constraint, name);
+	}
+	
+	public void setInformation(int id, int outgoingTensorSize, int numberOfOperations,  int RamToStore, DeviceConstraint constraint, String name){
 		this.id = id;
+		this.name = name;
 		this.outgoingTensorSize = outgoingTensorSize;
 		this.numberOfOperations = numberOfOperations;
 		this.RamToStore = RamToStore;
@@ -104,6 +110,10 @@ public class Node implements ConstraintInterface{
 	
 	public int getId(){
 		return this.id;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	public Set<Node> getOutgoingNodes() {

@@ -32,7 +32,7 @@ public class Config {
 		    //{ "DividePathPartitioning", "HighDegreeVerticesFirstScheduler" },
 		    //{"DividePathPartitioning", "LargestRemainedTimeToFinishFirst"},
 			
-			{ "WeightFunctionPartitioning", "FifoScheduler" },
+//			{ "WeightFunctionPartitioning", "FifoScheduler" },
 //			{"WeightFunctionPartitioning", "HighDegreeVerticesFirstScheduler"},
 //			{"WeightFunctionPartitioning", "LargestRemainedTimeToFinishFirst"},
 

@@ -38,4 +38,7 @@ public class CreationNodeEntry {
 	public DeviceConstraint getConstraint(){
 		return DeviceConstraint.valueOf(components[7]);
 	}
+	public String getName(){
+		return String.valueOf(components[8]);
+	}
 }

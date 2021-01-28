@@ -32,6 +32,10 @@ public class Node {
 	public int getId() {
 		return id;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
 	public Set<Node> getOutgoingNodes() {
 		return outgoingNodes;
